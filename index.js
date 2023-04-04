@@ -69,7 +69,7 @@ export const optimizeImage = (file) => new Promise((resolve, _reject) => {
     canvas.height = heightAfter;
     ctx.drawImage(imgBefore, 0, 0, widthAfter, heightAfter);
     canvas.toBlob((blob) => {
-      const filename = file.name.slice(0, indexOfExtension - 1) + outputFormat.extension;
+      const filename = file.name.slice(0, indexOfExtension + 1) + outputFormat.extension;
       const result = new File([blob], filename, { type: outputFormat.mime });
       resolve(result);
     }, outputFormat.mime, quality);
