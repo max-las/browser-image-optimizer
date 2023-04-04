@@ -48,6 +48,9 @@ export const optimizeImage = (file) => new Promise((resolve, _reject) => {
 
   let quality;
   switch (browser()) {
+    case 'Firefox':
+      quality = 0.75;
+      break;
     case 'Safari':
       quality = 0.55;
       break;
