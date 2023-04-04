@@ -1,0 +1,19 @@
+{
+  "name": "@max-las/browser-image-optimizer",
+  "version": "0.1.0",
+  "description": "Provides method(s) to reduce image file weight in the browser (typically before upload)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/max-las/browser-image-optimizer.git"
+  },
+  "author": "max-las",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/max-las/browser-image-optimizer/issues"
+  },
+  "homepage": "https://github.com/max-las/browser-image-optimizer#readme"
+}
