@@ -1,33 +1,4 @@
-const browser = () => {
-  if((navigator.userAgent.indexOf('Opera') || navigator.userAgent.indexOf('OPR')) != -1 ) 
-  {
-    return 'Opera';
-  }
-  else if(navigator.userAgent.indexOf('Edg') != -1 )
-  {
-    return 'Edge';
-  }
-  else if(navigator.userAgent.indexOf('Chrome') != -1 )
-  {
-    return 'Chrome';
-  }
-  else if(navigator.userAgent.indexOf('Safari') != -1)
-  {
-    return 'Safari';
-  }
-  else if(navigator.userAgent.indexOf('Firefox') != -1 ) 
-  {
-    return 'Firefox';
-  }
-  else if((navigator.userAgent.indexOf('MSIE') != -1 ) || (!!document.documentMode == true )) //IF IE > 10
-  {
-    return 'IE'; 
-  }  
-  else 
-  {
-    return 'unknown';
-  }
-};
+import { Browser, detectBrowser } from './browser';
 
 const supportedTypes = ['image/jpeg', 'image/png'];
 const outputFormat = {
@@ -35,7 +6,7 @@ const outputFormat = {
   mime: 'image/jpeg'
 };
 
-export const optimizeImage = (file) => new Promise((resolve, _reject) => {
+export const optimizeImage = (file: File) => new Promise((resolve) => {
   const indexOfExtension = file.name.lastIndexOf('.');
   if (!supportedTypes.includes(file.type) || indexOfExtension < 0) {
     resolve(file);
@@ -43,25 +14,25 @@ export const optimizeImage = (file) => new Promise((resolve, _reject) => {
   }
 
   const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
   const imgBefore = new Image();
 
-  let quality;
-  switch (browser()) {
-    case 'Firefox':
+  let quality: number;
+  switch (detectBrowser()) {
+    case Browser.Firefox:
       quality = 0.75;
       break;
-    case 'Safari':
+    case Browser.Safari:
       quality = 0.55;
       break;
     default:
       quality = 0.80;
   }
 
-  imgBefore.onload = function() {
-    const ratio = this.width / this.height;
+  imgBefore.addEventListener('load', () => {
+    const ratio = imgBefore.width / imgBefore.height;
     let heightAfter, widthAfter;
-    if (this.height < this.width) {
+    if (imgBefore.height < imgBefore.width) {
       heightAfter = 1500;
       widthAfter = 1500 * ratio;
     } else {
@@ -72,11 +43,12 @@ export const optimizeImage = (file) => new Promise((resolve, _reject) => {
     canvas.height = heightAfter;
     ctx.drawImage(imgBefore, 0, 0, widthAfter, heightAfter);
     canvas.toBlob((blob) => {
+      blob = blob as Blob;
       const filename = file.name.slice(0, indexOfExtension + 1) + outputFormat.extension;
       const result = new File([blob], filename, { type: outputFormat.mime });
       resolve(result);
     }, outputFormat.mime, quality);
-  };
+  });
 
   imgBefore.src = URL.createObjectURL(file);
 });
