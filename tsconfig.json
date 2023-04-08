@@ -1,16 +1,18 @@
 {
   "compilerOptions": {
 		"allowJs": false,
+		"declaration": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
-		"isolatedModules": true,
     "lib": [
 			"esnext",
 			"DOM",
 			"DOM.Iterable"
 		],
     "module": "esnext",
+		"outDir": "dist",
 		"resolveJsonModule": false,
+		"rootDir": "src",
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
