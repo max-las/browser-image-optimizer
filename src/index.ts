@@ -19,11 +19,11 @@ export const optimizeImage = (file: File) => new Promise((resolve) => {
 
   let quality: number;
   switch (detectBrowser()) {
-    case Browser.Safari:
-      quality = 0.55;
-      break;
-    default:
-      quality = 0.80;
+  case Browser.Safari:
+    quality = 0.55;
+    break;
+  default:
+    quality = 0.80;
   }
 
   imgBefore.addEventListener('load', () => {
